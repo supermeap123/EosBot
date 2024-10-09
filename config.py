@@ -8,10 +8,9 @@ from logging.handlers import RotatingFileHandler
 load_dotenv()
 DISCORD_TOKEN = os.getenv('DISCORD_TOKEN')
 OPENROUTER_API_KEY = os.getenv('OPENROUTER_API_KEY')
-OPENPIPE_API_KEY = os.getenv('OPENPIPE_API_KEY')  # New API key for OpenPipe
 
-if not DISCORD_TOKEN or not OPENROUTER_API_KEY or not OPENPIPE_API_KEY:
-    raise EnvironmentError("Missing one or more required environment variables.")
+if not DISCORD_TOKEN or not OPENROUTER_API_KEY:
+    raise EnvironmentError("Missing DISCORD_TOKEN or OPENROUTER_API_KEY in environment variables.")
 
 # Set up logging
 if not os.path.exists('logs'):
