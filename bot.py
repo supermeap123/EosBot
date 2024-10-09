@@ -9,7 +9,7 @@ intents = discord.Intents.default()
 intents.messages = True
 intents.guilds = True
 intents.members = True
-intents.message_content = True  # Required to read message content
+intents.message_content = True
 
 bot = commands.Bot(command_prefix='e!', intents=intents)
 
@@ -17,7 +17,7 @@ bot = commands.Bot(command_prefix='e!', intents=intents)
 async def on_ready():
     logger.info(f"Logged in as {bot.user}")
     init_database()
-    await bot.add_cog(EosCog(bot))
+    bot.add_cog(EosCog(bot))
 
 if __name__ == '__main__':
     try:

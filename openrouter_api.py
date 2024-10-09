@@ -1,17 +1,16 @@
 # openrouter_api.py
 import aiohttp
-import asyncio
-from config import OPENROUTER_API_KEY, logger  # Import logger
+from config import OPENROUTER_API_KEY, logger
 
 API_URL = 'https://openrouter.ai/api/v1/chat/completions'
 
-async def get_openrouter_response(messages, model='cohere/command-r-plus', temperature=0.7):
+async def get_openrouter_response(messages, model_string, temperature=0.7):
     headers = {
         'Authorization': f'Bearer {OPENROUTER_API_KEY}',
         'Content-Type': 'application/json',
     }
     payload = {
-        'model': model,
+        'model': model_string,
         'messages': messages,
         'temperature': temperature,
     }
