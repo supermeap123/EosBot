@@ -50,19 +50,32 @@ def load_probabilities(guild_id, channel_id):
     with db_lock:
         conn = sqlite3.connect(DATABASE_FILE)
         cursor = conn.cursor()
-        cursor.execute('SELECT reply_probability, reaction_probability FROM probabilities WHERE guild_id = ? AND channel_id = ?', (str(guild_id), channel_id))
+        cursor.execute(
+            '''
+            SELECT reply_probability, reaction_probability 
+            FROM probabilities 
+            WHERE guild_id = ? AND channel_id = ?
+            ''',
+            (str(guild_id), channel_id)
+        )
         result = cursor.fetchone()
         conn.close()
         if result:
             return result[0], result[1]
         else:
-            return 0.1, 0.1  # Default probabilities
+            return 0.1, 0.1  # Default probabilities (10%)
 
 def save_probabilities(guild_id, channel_id, reply_probability, reaction_probability):
     with db_lock:
         conn = sqlite3.connect(DATABASE_FILE)
         cursor = conn.cursor()
-        cursor.execute('REPLACE INTO probabilities (guild_id, channel_id, reply_probability, reaction_probability) VALUES (?, ?, ?, ?)',
-                       (str(guild_id), channel_id, reply_probability, reaction_probability))
+        cursor.execute(
+            '''
+            REPLACE INTO probabilities 
+            (guild_id, channel_id, reply_probability, reaction_probability) 
+            VALUES (?, ?, ?, ?)
+            ''',
+            (str(guild_id), channel_id, reply_probability, reaction_probability)
+        )
         conn.commit()
         conn.close()
